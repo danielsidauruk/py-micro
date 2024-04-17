@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request
 import redis
+import os
 
 app = Flask(__name__)
-redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+redis_host = os.getenv('REDIS_HOST', 'localhost')
+redis_client = redis.StrictRedis(host=redis_host, port=6379, db=0)
 channel_name = 'messages'
 
 @app.route('/')
