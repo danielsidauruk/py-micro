@@ -1,9 +1,16 @@
-FROM python:3.11
+FROM python:3.9-slim
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
-COPY consumer.py .
+COPY requirements.txt .
 
-RUN pip install redis
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["python", "consumer.py"]
+COPY . /app
+
+EXPOSE 5000
+
+CMD ["python", "app.py"]

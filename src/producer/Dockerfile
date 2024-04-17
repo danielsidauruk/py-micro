@@ -1,9 +1,14 @@
-FROM python:3.11
+FROM python:3.9-slim
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 WORKDIR /app
 
-COPY producer.py .
+COPY . .
 
-RUN pip install redis
+RUN pip install --no-cache-dir Flask redis
 
-CMD ["python", "producer.py"]
+EXPOSE 5001
+
+CMD ["python", "app.py"]
